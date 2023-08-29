@@ -1,5 +1,5 @@
 package dev.lucin.domain;
 
 public enum Color {
-    RED, GREEN, BLUE, YELLOW;
+    RED, GREEN, BLUE, YELLOW, BLACK;
 }
