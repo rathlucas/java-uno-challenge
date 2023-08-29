@@ -1,6 +1,7 @@
 package dev.lucin.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Card {
@@ -13,16 +14,24 @@ public class Card {
     }
 
     public static List<Card> getFullDeck() {
-        List<CardType> coloredTypes = List.of(CardType.values()).subList(0, 3);
-
         List<Card> deck = new ArrayList<>();
-        for (Color color : Color.values()) {
+
+        CardType[] coloredTypes = Arrays.copyOfRange(CardType.values(), 0, 3);
+        Color[] numericCardColors = Arrays.copyOfRange(Color.values(), 0, 4);
+        for (Color color : numericCardColors) {
             for (int i = 0; i < 10; i++) {
                 deck.add(new Card(String.valueOf(i), color));
             }
 
             for (CardType type : coloredTypes) {
-                deck.add(new Card(type.toString(), color));
+                deck.add(new SpecialCard(type.toString(), color));
+            }
+        }
+
+        CardType[] blackTypes = Arrays.copyOfRange(CardType.values(), 3, 5);
+        for (CardType type : blackTypes) {
+            for (int i = 0; i < 4; i++) {
+                deck.add(new SpecialCard(type.toString(), Color.BLACK));
             }
         }
 
