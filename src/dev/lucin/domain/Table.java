@@ -16,7 +16,7 @@ public class Table {
         }
 
         discardPile.addFirst(card);
-        currentColor = card.getColor();
+        currentColor = card.color();
         System.out.println("Played Card: " + card);
     }
 
@@ -27,8 +27,8 @@ public class Table {
 
         Card topItem = discardPile.peekFirst();
         if (topItem != null) {
-            return card.getValue().equals(topItem.getValue())
-                    || card.getColor().equals(currentColor);
+            return card.value().equals(topItem.value())
+                    || card.color().equals(currentColor);
         }
 
         return false;
