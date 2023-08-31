@@ -13,6 +13,14 @@ public class Card {
         this.color = color;
     }
 
+    public String getValue() {
+        return value;
+    }
+
+    public Color getColor() {
+        return color;
+    }
+
     public static List<Card> getFullDeck() {
         List<Card> deck = new ArrayList<>();
 
