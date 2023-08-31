@@ -20,11 +20,16 @@ public class Card {
         Color[] numericCardColors = Arrays.copyOfRange(Color.values(), 0, 4);
         for (Color color : numericCardColors) {
             for (int i = 0; i < 10; i++) {
+                if (i > 0) {
+                    deck.add(new Card(String.valueOf(i), color));
+                }
                 deck.add(new Card(String.valueOf(i), color));
             }
 
             for (CardType type : coloredTypes) {
-                deck.add(new SpecialCard(type.toString(), color));
+                for (int i = 0; i < 2; i++) {
+                    deck.add(new SpecialCard(type.toString(), color));
+                }
             }
         }
 
@@ -36,6 +41,16 @@ public class Card {
         }
 
         return deck;
+    }
+
+    public static void printDeck(List<Card> deck) {
+        int itemsPerRow = 8;
+        for (int i = 0; i < deck.size() / 8; i++) {
+            int head = i * itemsPerRow;
+            int tail = head + itemsPerRow;
+            var row = deck.subList(head, tail);
+            System.out.println(row);
+        }
     }
 
     @Override
