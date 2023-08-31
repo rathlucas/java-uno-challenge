@@ -8,6 +8,7 @@ public class Main {
 
     public static void main(String[] args) {
         var deck = Card.getFullDeck();
-        System.out.println("Uno Deck = " + deck);
+        Card.printDeck(deck);
+        System.out.println("Uno Deck Length = " + deck.size());
     }
 }
