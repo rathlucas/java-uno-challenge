@@ -4,23 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class Card {
-    private final String value;
-    private final Color color;
-
-    public Card(String value, Color color) {
-        this.value = value;
-        this.color = color;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public Color getColor() {
-        return color;
-    }
-
+public record Card(String value, Color color) {
     public static List<Card> getFullDeck() {
         List<Card> deck = new ArrayList<>();
 
@@ -36,15 +20,16 @@ public class Card {
 
             for (CardType type : coloredTypes) {
                 for (int i = 0; i < 2; i++) {
-                    deck.add(new SpecialCard(type.toString(), color));
+                    deck.add(new Card(type.toString(), color));
                 }
             }
         }
 
         CardType[] blackTypes = Arrays.copyOfRange(CardType.values(), 3, 5);
         for (CardType type : blackTypes) {
+            System.out.println(type);
             for (int i = 0; i < 4; i++) {
-                deck.add(new SpecialCard(type.toString(), Color.BLACK));
+                deck.add(new Card(type.name(), Color.BLACK));
             }
         }
 
@@ -55,7 +40,7 @@ public class Card {
         int itemsPerRow = 8;
         for (int i = 0; i < deck.size() / 8; i++) {
             int head = i * itemsPerRow;
-            int tail = head + itemsPerRow;
+            int tail = head + itemsPerRow + 4;
             var row = deck.subList(head, tail);
             System.out.println(row);
         }
@@ -64,13 +49,5 @@ public class Card {
     @Override
     public String toString() {
         return "%s (%s)".formatted(value, color);
-    }
-}
-
-class SpecialCard extends Card {
-    private CardType type;
-
-    public SpecialCard(String value, Color color) {
-        super(value, color);
     }
 }
