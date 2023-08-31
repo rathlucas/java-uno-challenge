@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+enum CardType {
+    REVERSE, BLOCK, BUY_TWO, BUY_FOUR, CHANGE_COLOR
+}
+
 public record Card(String value, Color color) {
     public static List<Card> getFullDeck() {
         List<Card> deck = new ArrayList<>();
@@ -27,13 +31,18 @@ public record Card(String value, Color color) {
 
         CardType[] blackTypes = Arrays.copyOfRange(CardType.values(), 3, 5);
         for (CardType type : blackTypes) {
-            System.out.println(type);
             for (int i = 0; i < 4; i++) {
                 deck.add(new Card(type.name(), Color.BLACK));
             }
         }
 
         return deck;
+    }
+
+    public static void dealHand(List<Card> deck, Player player) {
+        for (int i = 0; i < 7; i++) {
+            player.drawCard(deck.remove(0));
+        }
     }
 
     public static void printDeck(List<Card> deck) {
