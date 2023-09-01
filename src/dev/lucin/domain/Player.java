@@ -19,7 +19,7 @@ public class Player {
         return hand;
     }
 
-    public void setHand(List<Card> newHand) {
+    protected void setHand(List<Card> newHand) {
         hand = newHand;
     }
 
