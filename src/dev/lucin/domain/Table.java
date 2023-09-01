@@ -1,19 +1,39 @@
 package dev.lucin.domain;
 
-import java.util.*;
+
+import java.util.ArrayDeque;
+import java.util.ArrayList;
+import java.util.Deque;
+import java.util.List;
 
 public class Table {
-    private Color currentColor;
+    private final List<Player> players;
     private final Deque<Card> discardPile = new ArrayDeque<>();
+    private Color currentColor;
 
-    public Table() {
+    public Table(List<Player> players) {
+        this.players = new ArrayList<>(players);
     }
 
-    public void addCard(Card card) {
+    public void dealHands(List<Card> deck) {
+        for (Player player : players) {
+            for (int i = 0; i < 7; i++) {
+                player.drawCard(deck.remove(0));
+            }
+        }
+    }
+
+    public void makePlay(Player player, int cardIndex) {
+        Card card = player.playCard(cardIndex);
+
         if (!isValidCard(card)) {
             System.err.println("Invalid Card!");
             return;
         }
+
+        List<Card> newPlayerHand = player.hand();
+        newPlayerHand.remove(cardIndex);
+        player.setHand(newPlayerHand);
 
         discardPile.addFirst(card);
         currentColor = card.color();
