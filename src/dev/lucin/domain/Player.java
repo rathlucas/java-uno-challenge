@@ -4,22 +4,34 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Player {
+    private String name;
     private List<Card> hand = new ArrayList<>();
 
-    public List<Card> getHand() {
+    public Player(String name) {
+        this.name = name;
+    }
+
+    public String name() {
+        return name;
+    }
+
+    public List<Card> hand() {
         return hand;
     }
 
-    public Card playCard(Card card) {
-        int cardIndex = hand.indexOf(card);
+    public void setHand(List<Card> newHand) {
+        hand = newHand;
+    }
+
+    protected Card playCard(int cardIndex) {
         return hand.get(cardIndex);
     }
 
-    public void drawCard(Card card) {
+    protected void drawCard(Card card) {
         hand.add(card);
     }
 
-    public void drawCard(List<Card> cards) {
+    protected void drawCard(List<Card> cards) {
         hand.addAll(cards);
     }
 }
