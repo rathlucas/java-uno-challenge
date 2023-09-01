@@ -39,11 +39,6 @@ public record Card(String value, Color color) {
         return deck;
     }
 
-    public static void dealHand(List<Card> deck, Player player) {
-        for (int i = 0; i < 7; i++) {
-            player.drawCard(deck.remove(0));
-        }
-    }
 
     public static void printDeck(List<Card> deck) {
         int itemsPerRow = 8;
