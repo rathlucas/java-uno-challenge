@@ -23,6 +23,12 @@ public class Main {
         Table table = new Table(List.of(player1, player2));
         table.dealHands(deck);
 
+        System.out.printf("""
+                Players:
+                %s
+                %s%n""", player1.name(), player2.name());
+
+        System.out.println("_".repeat(20));
 
         while (gameLoop) {
             System.out.println("Your Hand: " + player1.hand());
