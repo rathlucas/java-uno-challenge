@@ -1,10 +1,9 @@
 package dev.lucin.domain;
 
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Deque;
-import java.util.List;
+import dev.lucin.Main;
+
+import java.util.*;
 
 public class Table {
     private final List<Player> players;
@@ -24,24 +23,38 @@ public class Table {
     }
 
     public void makePlay(Player player, int cardIndex) {
-        Card card = player.playCard(cardIndex);
+        int realIndex = cardIndex - 1;
+        if (realIndex < 0 || realIndex > player.hand().size()) {
+            System.err.println("Invalid Card Position!");
+            return;
+        }
 
+        Card card = player.playCard(cardIndex - 1);
         if (!isValidCard(card)) {
-            System.err.println("Invalid Card!");
+            Main.printSeparator();
+            System.err.println("Invalid Card: " + card);
+            System.err.println("Top of The Discard Pile: " + discardPile.peekFirst());
             return;
         }
 
         List<Card> newPlayerHand = player.hand();
-        newPlayerHand.remove(cardIndex);
+        newPlayerHand.remove(cardIndex - 1);
         player.setHand(newPlayerHand);
 
         discardPile.addFirst(card);
-        currentColor = card.color();
-        System.out.println("Played Card: " + card);
+        currentColor = (card.color().equals(Color.BLACK))
+                ? chooseColor()
+                : card.color();
+
+        System.out.println(this);
     }
 
     private boolean isValidCard(Card card) {
         if (discardPile.isEmpty()) {
+            return true;
+        }
+
+        if (card.color().equals(Color.BLACK)) {
             return true;
         }
 
@@ -54,8 +67,23 @@ public class Table {
         return false;
     }
 
+    private Color chooseColor() {
+        Main.printSeparator();
+        System.out.println("Choose a Color: ");
+
+        for (Color color : Color.values()) {
+            if (color != Color.BLACK) {
+                System.out.print(color + " ");
+            }
+        }
+
+        int option = Main.readLine();
+        return Color.getColor(option);
+    }
+
     @Override
     public String toString() {
+        Main.printSeparator();
         return """
                 Current Color: (%s)
                 Last Played Card: (%s)%n""".formatted(currentColor, discardPile.peekFirst());
