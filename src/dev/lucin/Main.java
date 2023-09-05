@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Main {
-    private static Scanner sc = new Scanner(System.in);
-    private static boolean gameLoop = true;
+    private static final Scanner sc = new Scanner(System.in);
+    private static final boolean gameLoop = true;
 
     public static void main(String[] args) {
         var deck = Card.getFullDeck();
@@ -28,20 +28,39 @@ public class Main {
                 %s
                 %s%n""", player1.name(), player2.name());
 
-        System.out.println("_".repeat(20));
-
         while (gameLoop) {
+            printSeparator();
             System.out.println("Your Hand: " + player1.hand());
             System.out.println("Choose a Card To Play (Enter a Number)");
+            System.out.println("Or Enter 0 To See the Discard Pile");
 
             try {
                 int option = sc.nextInt();
-                System.out.println("Chosen Option: " + option);
-                gameLoop = false;
+                if (option == 0) {
+                    System.out.println(table);
+                } else {
+                    table.makePlay(player1, option);
+                }
             } catch (InputMismatchException e) {
                 System.err.println("Invalid Option, Try Again!");
                 sc.nextLine();
             }
         }
     }
+
+    public static int readLine() {
+        try {
+            return sc.nextInt();
+        } catch (InputMismatchException e) {
+            System.err.println("Invalid Option, Try Again!");
+            sc.nextLine();
+        }
+
+        return -1;
+    }
+
+    public static void printSeparator() {
+        System.out.println("_".repeat(20));
+    }
+
 }
